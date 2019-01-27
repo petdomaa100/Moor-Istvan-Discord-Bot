@@ -1,7 +1,7 @@
 {
     "name": "moor_istvan",
     "version": "1.0.0",
-    "description": "",
+    "description": "Ez a Mulatós/Megborítós szerevnek a Discord Bot-ja.",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
