@@ -30,7 +30,7 @@ module.exports.run = async (bot, message, args, prefix) => {
     }
 
     message.channel.send('**Újraindítom magam...**').then((msg) => {
-        bot.destroy().then(() => bot.login(botconfig.token)).then(() => {
+        bot.destroy().then(() => bot.login(process.env.TOKEN)).then(() => {
             msg.channel.send('Újraindultam.');
 
             let rebootOutput = new Discord.RichEmbed()
