@@ -1,0 +1,25 @@
+{
+    "name": "moor_istvan",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Domi",
+    "license": "ISC",
+    "dependencies": {
+        "discord.js": "^11.4.2",
+        "ffmpeg": "0.0.4",
+        "ffmpeg-binaries": "^3.2.2",
+        "hh-mm-ss": "^1.2.0",
+        "moment": "^2.23.0",
+        "node-opus": "^0.2.9",
+        "opusscript": "0.0.6",
+        "request": "^2.88.0",
+        "simple-youtube-api": "^5.1.1",
+        "superagent": "^4.0.0",
+        "thousand-separator": "^1.0.4",
+        "ytdl-core": "^0.28.0"
+    }
+}
