@@ -18,7 +18,7 @@ module.exports.run = async (bot, message, args, prefix) => {
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
             .setDescription(`Csak simán írd be, hogy ${prefix}reboot`)
-            .setFooter(`Helyes kód: ${prefix}reboot <törlendő üzenetek száma>`)
+            .setFooter(`Helyes kód: ${prefix}reboot`)
         message.channel.send(rebootBad2);
         return;
     }

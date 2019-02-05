@@ -27,7 +27,7 @@ module.exports.run = async (bot, message, prefix) => {
         var pauseBad2 = new Discord.RichEmbed()
             .setTitle('Retardált!')
             .setDescription('Nem is megy semmilyen zene!')
-            .setFooter(`Berakhatsz egy csodás zenét a ${prefix}play *<youtube link> commandal!*`)
+            .setFooter(`Berakhatsz egy csodás zenét a ${prefix}play <youtube link> commandal!`)
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
         message.channel.send(pauseBad2);

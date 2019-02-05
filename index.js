@@ -5,10 +5,10 @@ const prefixJSON = require('./data/prefix.json');
 
 const bot = new Discord.Client({disableEveryone: true});
 
-require('./util/eventHandler')(bot);
-
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
+
+require('./util/eventHandler')(bot);
 
 function loadCommands() {
     fs.readdir('./commands/', (err, files) => {
@@ -33,10 +33,12 @@ function loadCommands() {
 
 loadCommands();
 
+global.nowPlaying = null;
 global.queue = [];
 
 bot.on("message", async (message) => {
     if(message.channel.type === 'dm') return;
+    //if(message.author.id == '302769145072844800') return;
 
     let prefix = prefixJSON.prefix;
 

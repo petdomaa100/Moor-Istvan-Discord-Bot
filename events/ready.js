@@ -12,7 +12,7 @@ module.exports = bot => {
     let statuszok = [
         `${prefix}help`,
         'Forgatás definíciója',
-        'Zokniszavály',
+        'Zokniszabály',
         'Aranyérkenőcs',
         'Baszatáska',
     ];
@@ -22,8 +22,8 @@ module.exports = bot => {
         bot.user.setActivity(status, { type: "PLAYING" });
     }, 5000);
     
-    /*const url1 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&key=' + botconfig.yt_api_key;
-    const url2 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UCq-Fj5jknLsUf-MWSy4_brA&key=' + botconfig.yt_api_key;
+    const url1 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&key=' + process.env.YT_API_KEY;
+    const url2 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UCq-Fj5jknLsUf-MWSy4_brA&key=' + process.env.YT_API_KEY;
 
     let PewDiePieChannel = bot.channels.find(x => x.id == '538258585612845076');
     let FUJtSeriesChannel = bot.channels.find(x => x.id == '538258717368647692');
@@ -47,12 +47,12 @@ module.exports = bot => {
             
                         PewDiePieChannel.setName(`PewDiePie: \xa0\xa0 ${separator(PewDiePieSub)}`);
     
-                        differenceChannel.setName(`Külömbség: \xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 ${separator(PewDiePieSub - FUJtSeriesSub)}`);
+                        differenceChannel.setName(`Külömbség: \xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 ${separator(PewDiePieSub - FUJtSeriesSub)}`);
                     }
                 });
             }
         });
-    }, 2000);*/
+    }, 10000);
 
     //bot.user.setAvatar(botconfig.moor_avatar);
 

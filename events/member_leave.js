@@ -1,9 +1,9 @@
 const Discord = require('discord.js');
 
-module.exports = (member) => {
+module.exports = (bot, member) => {
     let CHANNEL = member.guild.channels.find(channel => channel.id == '526037223196590080');
 
-    if(!CHANNEL) return message.channel.send('Nem találtam **bejelentések-🔔** channel-t.');
+    if(!CHANNEL.name) return message.channel.send('Nem találtam **bejelentések-🔔** channel-t.');
 
     let leaveMsg = new Discord.RichEmbed()
         .setTitle('Tragédia!')
