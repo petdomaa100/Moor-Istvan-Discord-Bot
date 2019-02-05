@@ -10,9 +10,9 @@
     "license": "ISC",
     "dependencies": {
         "cheerio": "^1.0.0-rc.2",
-        "discord.js": "^11.4.2",
+        "discord.js": "github:GamingPrower/discord.js#11.4-dev",
         "ffmpeg": "0.0.4",
-        "ffmpeg-binaries": "^3.2.2-3",
+        "ffmpeg-binaries": "^3.2.2",
         "hh-mm-ss": "^1.2.0",
         "moment": "^2.23.0",
         "nightmare": "^3.0.1",
