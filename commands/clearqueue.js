@@ -24,7 +24,7 @@ module.exports.run = async (bot, message, args) => {
 
 module.exports.help = {
     name: 'clearqueue',
-    aliases: ['clearquue', 'cq', 'clearq', 'cqueue'],
+    aliases: ['clearquue', 'cq', 'clearq', 'cqueue', 'qc'],
     usage: 'clearqueue',
     description: 'Kitörli az aktuális lejátszási listát.',
     accessableby: 'Mindenki'

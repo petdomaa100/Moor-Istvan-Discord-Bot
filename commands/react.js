@@ -1,19 +1,30 @@
 const Discord = require('discord.js');
 
 module.exports.run = async (bot, message, args) => {
-    let channel = message.guild.channels.get(message.channel.id);
-
     if(!args[0]) return message.channel.send('More, nem adtál meg egy emoji-t!');
 
     await message.delete();
 
-    channel.fetchMessages({ limit: 1 }).then(messages => {
+    message.channel.fetchMessages({ limit: 1 }).then(messages => {
+        let emogjMessageArray = args[0].split(':');
         let msg = messages.array()[0];
-        let emogj = msg.guild.emojis.find(x => x.name == args[0]);
 
-        msg.react(emogj);    
+        let EMOGJ;
+
+        if(!emogjMessageArray[1]) {
+            EMOGJ = args[0];
+        } else {
+            EMOGJ = emogjMessageArray[1];
+        }
+
+        let emogj = msg.guild.emojis.find(x => x.name == EMOGJ);
+
+        if(!emogj) {
+            return message.channel.send('Bocs, valami baj történt... Valószínűleg elcseszted az emogj nevét... Szokásosan...').then((msg) => msg.delete(3000));
+        } 
+
+        msg.react(emogj);
     });
-
 }
 
 module.exports.help = {

@@ -31,7 +31,7 @@ module.exports.run = async (bot, message, args, prefix) => {
 
     function play(voicechannel) {
         message.guild.dispatcher = voicechannel.playStream(YTDL(queue[0].url, { filter: 'audioonly' }));
-
+        
         nowPlaying = queue[0];
         queue.shift();
 
@@ -43,7 +43,7 @@ module.exports.run = async (bot, message, args, prefix) => {
                 nowPlaying = null;
             }
         });
-    };
+    }
 
     if(args[0].startsWith('https://www.youtube.com/playlist?list=')) {
 

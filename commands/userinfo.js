@@ -12,6 +12,8 @@ module.exports.run = async (bot, message) => {
 
     const member = message.guild.member(user);
 
+    const memberRoles = member.roles.map(roles => roles.name).slice(1);
+
     let info = new Discord.RichEmbed()
         .setColor('RANDOM')
         .setThumbnail(user.avatarURL)
@@ -20,10 +22,11 @@ module.exports.run = async (bot, message) => {
         .addField('Discord Tag:', user.tag, true)
         .addField('Státusz:', user.presence.status, true)
         .addField('Verified:', user.verified == true ? 'Igen' : 'Nem', true)
+        .addField('User ID-ja:', user.id, true)
         .addField('Ezt játsza:', user.presence.game == 'Fortnite' ? 'Fortnite-os buzi' : user.presence.game || 'Semmit...' , true)
-        .addField('User elkészült:', moment.utc(member.createdAt).locale('hu').format('YYYY MMMM DD'), true)
+        .addField('User elkészült:', moment.utc(user.createdAt).locale('hu').format('YYYY MMMM DD'), true)
         .addField('User belépett:', moment.utc(member.joinedAt).locale('hu').format('YYYY MMMM DD'), true)
-        .addField('Role-jai:', member.roles.map(roles => roles.name).slice(1).join(', ') || 'Ő olyan szerencsétlen, hogy role-ja.')
+        .addField(memberRoles.length > 1 ? 'Role-jai:' : 'Role-ja:', memberRoles.join(', ') || 'Ő olyan szerencsétlen, hogy role-ja.')
     message.channel.send(info);
 }
 

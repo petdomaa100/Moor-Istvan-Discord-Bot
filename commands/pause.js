@@ -15,6 +15,8 @@ module.exports.run = async (bot, message, prefix) => {
     if(message.guild.dispatcher) {
         message.guild.dispatcher.pause();
 
+        nowPlaying.title += ' `[PAUSED]` ';
+
         var pauseOutput = new Discord.RichEmbed()
             .setTitle('Értettem!')
             .setDescription('Moór megállította a zenét!')

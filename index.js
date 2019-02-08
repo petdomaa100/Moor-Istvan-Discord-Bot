@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const botconfig = require('./botconfig.json');
-const prefixJSON = require('./data/prefix.json');
 
 const bot = new Discord.Client({disableEveryone: true});
 
@@ -35,14 +34,36 @@ loadCommands();
 
 global.nowPlaying = null;
 global.queue = [];
+global.blacklist = [];
+
+global.Sleep = function(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds) {
+            break;
+        }
+    }
+}
 
 bot.on("message", async (message) => {
     if(message.channel.type === 'dm') return;
-    //if(message.author.id == '302769145072844800') return;
 
-    let prefix = prefixJSON.prefix;
+    const prefixJSON = require('./data/prefix.json');
+    var prefix;
+
+    if (!prefixJSON.prefix) {
+        prefix = botconfig.prefix;
+    } else {
+        prefix = prefixJSON.prefix;
+    }
 
     if(!message.content.startsWith(prefix)) return;
+
+    if(blacklist.includes(message.author.id)) {
+        message.delete();
+        message.reply('Buzi! Neked erre nincs engedélyed!   lol').then((msg) => msg.delete(3000));
+        return;
+    }
 
     const messageArray = message.content.split(' ');
     const cmd = messageArray[0].toLowerCase();

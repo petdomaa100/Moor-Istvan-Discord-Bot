@@ -21,17 +21,23 @@ module.exports.run = async (bot, message, args, prefix) => {
         message.channel.send(clearBad2);
         return;
     }
-    
-    await message.delete();
 
-    message.channel.bulkDelete(args[0]).then(() => {
-        let clearOutput = new Discord.RichEmbed()
-            .setTitle('Siker!')
-            .setColor('#9b9b9b')
-            .setThumbnail('https://i.imgur.com/9BJ8AWV.png')
-            .setDescription(`Kitöröltem **${args[0]}db** üzenetet.`)
-            .setFooter('Ez az üzenet 5 másodpercen bellül megsemmisül.')
-        message.channel.send(clearOutput).then(msg => msg.delete(5000));
+    await message.channel.bulkDelete(parseInt(args[0]) + 1);
+
+    let clearOutput = new Discord.RichEmbed()
+        .setTitle('Siker!')
+        .setColor('#9b9b9b')
+        .setThumbnail('https://i.imgur.com/9BJ8AWV.png')
+        .setDescription(`Kitöröltem **${args[0]}db** üzenetet.`)
+        .setFooter('Ez az üzenet 5 másodpercen bellül megsemmisül.')
+    message.channel.send(clearOutput).then((msg) => {
+        message.channel.fetchMessages({ limit: 1 }).then(async(messages) => {
+            let msg2 = messages.array()[0];
+
+            await Sleep(5000);
+
+            if(msg.id == msg2.id) msg.delete();
+        });
     });
 }
 

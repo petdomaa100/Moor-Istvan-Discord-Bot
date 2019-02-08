@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-module.exports.run = async (bot, message) => {    
+module.exports.run = async (bot, message, prefix) => {    
     if(message.member.voiceChannel !== message.guild.me.voiceChannel) {
         var resumeBad1 = new Discord.RichEmbed()
             .setTitle('Retardált!')
@@ -14,6 +14,8 @@ module.exports.run = async (bot, message) => {
 
     if(message.guild.dispatcher) {
         message.guild.dispatcher.resume();
+
+        nowPlaying.title = nowPlaying.title.substring(0, nowPlaying.title.length - 11);
 
         var resumeGood = new Discord.RichEmbed()
             .setTitle('Értettem!')

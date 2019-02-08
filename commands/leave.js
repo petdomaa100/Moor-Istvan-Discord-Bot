@@ -3,9 +3,11 @@ const Discord = require('discord.js');
 module.exports.run = async (bot, message, args) => {
     if(message.guild.voiceConnection) {
         message.guild.voiceConnection.disconnect();
+        
         nowPlaying = null;
+        queue.length = 0;
 
-        var leaveGood = new Discord.RichEmbed()
+        let leaveGood = new Discord.RichEmbed()
             .setTitle('Elmentem.')
             .setDescription('Moór hazament.')
             .setColor('0x008000')
@@ -13,7 +15,7 @@ module.exports.run = async (bot, message, args) => {
             .setThumbnail('https://i.imgur.com/GYLlQqW.png')
         message.channel.send(leaveGood);
     } else {
-        var leaveBad = new Discord.RichEmbed()
+        let leaveBad = new Discord.RichEmbed()
             .setTitle('Elbasztad!')
             .setDescription('Moór nincs benne semmilyen Voice Channel-ben!')
             .setFooter('Benne kell hogy legyen Moór egy Voice Channel-ben mielőtt elküldöd!')

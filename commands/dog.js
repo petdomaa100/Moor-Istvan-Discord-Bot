@@ -6,7 +6,6 @@ module.exports.run = async (bot, message) => {
         .get('https://random.dog/woof.json');
 
     let pre_message_dog  = await message.channel.send('Már keresek is egy kutyát...');
-
     
     let dogOutput = new Discord.RichEmbed()
         .setColor('RANDOM')
