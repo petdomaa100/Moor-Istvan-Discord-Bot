@@ -22,7 +22,7 @@ module.exports = bot => {
         bot.user.setActivity(status, { type: "PLAYING" });
     }, 5000);
     
-    /*const url1 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&key=' + botconfig.yt_api_key;
+    const url1 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&key=' + botconfig.yt_api_key;
     const url2 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UCq-Fj5jknLsUf-MWSy4_brA&key=' + botconfig.yt_api_key;
 
     let PewDiePieChannel = bot.channels.find(x => x.id == '538258585612845076');
@@ -52,7 +52,7 @@ module.exports = bot => {
                 });
             }
         });
-    }, 1000);*/
+    }, 10000);
 
     //bot.user.setAvatar(botconfig.moor_avatar);
 
