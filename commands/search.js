@@ -76,7 +76,7 @@ module.exports.run = async (bot, message, args, prefix) => {
     }
 
     function play(voicechannel) {
-        message.guild.dispatcher = voicechannel.playStream(YTDL(queue[0].url, { filter: 'audioonly' }));
+        message.guild.dispatcher = voicechannel.playStream(YTDL(queue[0].url, { filter: 'audioonly', quality: 'highestaudio' }));
         
         nowPlaying = queue[0];
         queue.shift();
