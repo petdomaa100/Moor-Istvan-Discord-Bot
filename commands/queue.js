@@ -13,16 +13,6 @@ module.exports.run = async (bot, message, args, prefix) => {
         message.channel.send(queueBad1);
         return;
     }
-    
-    if(args[0]) {
-        let queueBad2 = new Discord.RichEmbed()
-            .setTitle('Buzi!')
-            .setDescription('Neked erre nincs engedélyed!')
-            .setColor('0xFF0000')
-            .setThumbnail('https://i.imgur.com/Lgekz3D.png')
-        message.channel.send(queueBad2);
-        return;
-    }
 
     var idotartam = 0;
 

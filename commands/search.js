@@ -71,6 +71,7 @@ module.exports.run = async (bot, message, args, prefix) => {
         }
 
         queue.push(zeneObject);
+        response.first().delete();
         searchOutputMSG.delete();
     }
 

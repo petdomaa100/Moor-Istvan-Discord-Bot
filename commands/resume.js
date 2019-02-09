@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports.run = async (bot, message, prefix) => {    
     if(message.member.voiceChannel !== message.guild.me.voiceChannel) {
-        var resumeBad1 = new Discord.RichEmbed()
+        let resumeBad1 = new Discord.RichEmbed()
             .setTitle('Retardált!')
             .setDescription('Ezt így nem tudom megcsinálni!')
             .setFooter('Ugyan abban a Voice Channel-ben kell lenned mint Moór.')
@@ -17,7 +17,7 @@ module.exports.run = async (bot, message, prefix) => {
 
         nowPlaying.title = nowPlaying.title.substring(0, nowPlaying.title.length - 11);
 
-        var resumeGood = new Discord.RichEmbed()
+        let resumeGood = new Discord.RichEmbed()
             .setTitle('Értettem!')
             .setDescription('Moór elindította a zenét!')
             .setFooter('Moór remek DJ, de azért még van mit tanulnia.')
@@ -26,7 +26,7 @@ module.exports.run = async (bot, message, prefix) => {
         message.channel.send(resumeGood);
         return;
     } else {
-        var resumeBad2 = new Discord.RichEmbed()
+        let resumeBad2 = new Discord.RichEmbed()
             .setTitle('Nyomorék!')
             .setDescription('Nem is megy semmilyen zene!')
             .setFooter(`Berakhatsz egy csodás zenét a ${prefix}play <youtube link> commandal!`)

@@ -7,15 +7,15 @@ module.exports.run = async (bot, message, args, prefix) => {
     let serverCommandok = [];
 
     if(userRoles.includes('Diktátor Titkára (majdnem főadmin)')) {
-        serverCommandok = ['play', 'search', 'pause', 'resume', 'disconnect', 'queue', 'clearqueue', 'removequeue', 'queueshuffle', 'nowplaying', 'botinfo', 'serverinfo', 'userinfo', 'prefix', 'reboot', 'seasonal_skin', 'clear', 'say', 'ping', 'dog', 'meme', 'mazo', 'help', 'report', 'react', 'join', 'leave', 'playmixek1', 'playsum41'];
+        serverCommandok = ['play', 'search', 'pause', 'resume', 'disconnect', 'queue', 'clearqueue', 'removequeue', 'queueshuffle', 'nowplaying', 'suggest', 'botinfo', 'serverinfo', 'userinfo', 'prefix', 'reboot', 'seasonal_skin', 'clear', 'say', 'ping', 'dog', 'meme', 'mazo', 'help', 'report', 'react', 'join', 'leave', 'playmixek1', 'playsum41', 'köszön'];
     }
 
     else if(userRoles.includes('Létező Emberek')) {
-        serverCommandok = ['play', 'search', 'pause', 'resume', 'disconnect', 'queue', 'clearqueue', 'removequeue', 'queueshuffle', 'nowplaying', 'botinfo', 'serverinfo', 'userinfo', 'seasonal_skin', 'say', 'dog', 'meme', 'mazo', 'help', 'report', 'react', 'join', 'leave', 'playmixek1', 'playsum41'];
+        serverCommandok = ['play', 'search', 'pause', 'resume', 'disconnect', 'queue', 'clearqueue', 'removequeue', 'queueshuffle', 'nowplaying', 'suggest', 'botinfo', 'serverinfo', 'userinfo', 'seasonal_skin', 'say', 'dog', 'meme', 'mazo', 'help', 'report', 'react', 'join', 'leave', 'playmixek1', 'playsum41', 'köszön'];
     }
     
     else {
-        serverCommandok = ['play', 'search', 'pause', 'resume', 'disconnect', 'queue', 'clearqueue', 'removequeue', 'queueshuffle', 'nowplaying', 'botinfo', 'serverinfo', 'userinfo', 'say', 'dog', 'meme', 'mazo', 'help', 'report', 'react', 'join', 'leave', 'playmixek1', 'playsum41'];
+        serverCommandok = ['play', 'search', 'pause', 'resume', 'disconnect', 'queue', 'clearqueue', 'removequeue', 'queueshuffle', 'nowplaying', 'suggest', 'botinfo', 'serverinfo', 'userinfo', 'say', 'dog', 'meme', 'mazo', 'help', 'report', 'react', 'join', 'leave', 'playmixek1', 'playsum41', 'köszön'];
     }
     
     if(args[0]) {
@@ -27,7 +27,7 @@ module.exports.run = async (bot, message, args, prefix) => {
                 let helpSpesificOutput = new Discord.RichEmbed()
                     .setColor('#ff9900')
                     .setAuthor('Moór Help')
-                    .setDescription(`Moór prefix-e: **${prefix}** \n\n **Command:** ${command.help.name}\n **Leírás:** ${command.help.description || "Nincs leírás"}\n **Használat:** ${prefix}${command.help.usage || "Nincs használat"}\n **Használhatja:** ${command.help.accessableby  || "Mindenki"}\n **Rokonai:** ${command.help.noalias || '`' + command.help.aliases.join('`, `') + '`'}`)
+                    .setDescription(`Moór prefix-e: **${prefix}** \n\n **Command:** ${command.help.name}\n **Leírás:** ${command.help.description || 'Nincs leírás'}\n **Használat:** ${command.help.p_usage || prefix + command.help.usage || 'Nincs megadott használat'}\n **Használhatja:** ${command.help.accessableby || 'Mindenki'}\n **Rokonai:** ${command.help.noalias || '`' + command.help.aliases.join('`, `') + '`'}`)
                 message.channel.send(helpSpesificOutput);
             } else {
                 let helpSpesificBad = new Discord.RichEmbed()

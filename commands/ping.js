@@ -6,7 +6,7 @@ module.exports.run = async (bot, message, args, prefix) => {
             let pingOutput = new Discord.RichEmbed()
                 .setTitle('Kiszámoltam!')
                 .setColor('#FF9900')
-                .setDescription(`__Ping:__  **${msg.createdTimestamp - message.createdTimestamp}ms** \n__Latecy:__ **${Math.round(bot.ping)}ms.**`)
+                .setDescription(`__Ping:__  **${msg.createdTimestamp - message.createdTimestamp}ms** \n__Latency:__ **${Math.round(bot.ping)}ms.**`)
             msg.edit(pingOutput);
     });
     } else {

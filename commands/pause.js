@@ -17,7 +17,7 @@ module.exports.run = async (bot, message, prefix) => {
 
         nowPlaying.title += ' `[PAUSED]` ';
 
-        var pauseOutput = new Discord.RichEmbed()
+        let pauseOutput = new Discord.RichEmbed()
             .setTitle('Értettem!')
             .setDescription('Moór megállította a zenét!')
             .setFooter('Moór remek DJ, de azért még van mit tanulnia.')
@@ -26,7 +26,7 @@ module.exports.run = async (bot, message, prefix) => {
         message.channel.send(pauseOutput);
         return;
     } else {
-        var pauseBad2 = new Discord.RichEmbed()
+        let pauseBad2 = new Discord.RichEmbed()
             .setTitle('Retardált!')
             .setDescription('Nem is megy semmilyen zene!')
             .setFooter(`Berakhatsz egy csodás zenét a ${prefix}play <youtube link> commandal!`)

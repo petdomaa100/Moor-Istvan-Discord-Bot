@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
+const prefixJSON = require('../data/prefix.json');
+const prefix = prefixJSON.prefix;
 
-module.exports.run = async (bot, message, prefix) => {
+module.exports.run = async (bot, message) => {
     if(!message.attachments.first()) {
         let seasonalSkinBad1 = new Discord.RichEmbed()
             .setTitle('Szerencsétlen vagy!')
@@ -42,7 +44,7 @@ module.exports.help = {
     name: 'seasonal_skin',
     noalias: 'Nincs rokona.',
     aliases: [],
-    usage: `Tölts fel egy képet, majd az "Add Comment" részen bellül: seasonal_skin.`,
+    p_usage: `Tölts fel egy képet, majd az "Add Comment" részen bellül: ${prefix}seasonal_skin.`,
     description: 'Moór átöltözik az új trendy öltözékébe.',
     accessableby: 'Mindenki'
 }
