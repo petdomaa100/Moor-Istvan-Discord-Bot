@@ -21,6 +21,14 @@ module.exports = bot => {
         let status = statuszok[Math.floor(Math.random() * statuszok.length)];
         bot.user.setActivity(status, { type: "PLAYING" });
     }, 5000);
+
+    setInterval(function() {
+        if(blacklist.length > 0) {
+            for (let i = 0; i < blacklist.length; i++) {
+                death(blacklist[i], i);
+            }    
+        }
+    }, 1200000);
     
     const url1 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&key=' + process.env.YT_API_KEY;
     const url2 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UCq-Fj5jknLsUf-MWSy4_brA&key=' + process.env.YT_API_KEY;

@@ -20,30 +20,72 @@ module.exports.run = async (bot, message, args) => {
     if(!args[1]) {
         reason = 'Nincs megadva.  lol';
     } else {
-        reason = args[1];
+        reason = args.slice(1).join(' ');
     }
 
-    blacklistAdd = function(aldozat, reason) {
-        if(!blacklist.includes(`${aldozat.username}#${aldozat.discriminator}`)) {
-            blacklist.push(`${aldozat.username}#${aldozat.discriminator}`);
-        } else {
-            message.delete();
-            message.channel.send(`${aldozat} már alapból benne van a **blacklist**-ben.`).then((msg) => msg.delete(4000));
-            return;
-        }
+    found = false;
 
+    if(blacklist.length > 0) {
+        for (let i = 0; i < blacklist.length; i++) {
+            if (blacklist[i].user == `${aldozat.username}#${aldozat.discriminator}`) {
+                found = true;
+                break;
+            }
+        }    
+    }
+
+    if (found == true) {
         message.delete();
+        message.channel.send(`${aldozat} már alapból benne van a **blacklist**-ben.`).then((msg) => msg.delete(4000));
+        return;
+    }
 
+    let opcioLVLOutput = new Discord.RichEmbed()
+        .setTitle('Válassz!')
+        .setDescription('Válaszd ki a büntetés szintjét.')
+        .setColor('RANDOM')
+        .setFooter('Van 5 másodperced!')
+    var opcioLVLOutputMSG = await message.channel.send(opcioLVLOutput);
+
+    try {
+        var opcio = await message.channel.awaitMessages(msg => msg.author.id == message.author.id && !isNaN(msg) && msg >= 1 && msg <= 3, { max: 1, time: 5000, errors: ['time'] });
+    } catch (error) {
+        message.delete();
+        opcioLVLOutputMSG.delete();
+        message.reply('Lejárt az idő.').then((msg) => msg.delete(3000));
+        return;
+    }
+    
+    const LEVEL = opcio.first().content;
+
+    opcioLVLOutputMSG.delete();
+    message.delete();
+    opcio.first().delete();
+    
+    blacklistAdd = function(aldozat, reason) {
+
+        let obj = {
+            user: `${aldozat.username}#${aldozat.discriminator}`,
+            lvl: parseInt(LEVEL),
+            added: moment.utc(new Date()).locale('hu').format('YYYY MMMM DD'),
+            reason: reason,
+            guildID: message.guild.id
+        }
+    
+        blacklist.push(obj);
+        console.log(obj);
+    
         let blacklistOutout = new Discord.RichEmbed()
             .setTitle('Feketelista!')
             .setDescription(`Hozzáadtam ${aldozat}, a feketelistához! \n\n __Oka:__ \n${reason} \n\n__Időpont:__ ${moment.utc(new Date()).locale('hu').format('YYYY MMMM DD')}`)
             .setFooter('Én a helyében félnék!')
             .setTimestamp()
             .setColor('RANDOM')
-        message.channel.send(blacklistOutout);    
-    }
+        message.channel.send(blacklistOutout);   
 
-    blacklistAdd(aldozat, reason);
+    }
+    
+    blacklistAdd(aldozat, reason);    
 }
 
 module.exports.help = {
