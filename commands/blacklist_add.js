@@ -76,7 +76,7 @@ module.exports.run = async (bot, message, args) => {
     
         let blacklistOutout = new Discord.RichEmbed()
             .setTitle('Feketelista!')
-            .setDescription(`Hozzáadtam ${aldozat}, a feketelistához! \n\n __Oka:__ \n${reason} \n\n__Időpont:__ ${moment.utc(new Date()).locale('hu').format('YYYY MMMM DD')}`)
+            .setDescription(`Hozzáadtam ${aldozat}, a feketelistához! \n\n __Oka:__ \n${reason} \n\n__Szintje:__ ${LEVEL} \n\n__Időpont:__ ${moment.utc(new Date()).locale('hu').format('YYYY MMMM DD')}`)
             .setFooter('Én a helyében félnék!')
             .setTimestamp()
             .setColor('RANDOM')
