@@ -84,10 +84,12 @@ bot.on("message", async (message) => {
 
     if(!message.content.startsWith(prefix)) return;
 
-    if(blacklist.includes(`${message.author.username}#${message.author.discriminator}`)) {
-        message.delete();
-        message.reply('Buzi! Neked erre nincs engedélyed!   lol').then((msg) => msg.delete(3000));
-        return;
+    for (let i = 0; i < blacklist.length; i++) {
+        if(blacklist[i].user == `${message.author.username}#${message.author.discriminator}` && blacklist[i].lvl >= 2) {
+            message.delete();
+            message.reply('Buzi! Neked erre nincs engedélyed!   lol').then((msg) => msg.delete(3000));
+            return;
+        }
     }
 
     const messageArray = message.content.split(' ');
