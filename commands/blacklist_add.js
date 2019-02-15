@@ -69,6 +69,7 @@ module.exports.run = async (bot, message, args) => {
             lvl: parseInt(LEVEL),
             added: moment.utc(new Date()).locale('hu').format('YYYY MMMM DD'),
             reason: reason,
+            avatar: aldozat.avatarURL,
             guildID: message.guild.id
         }
     

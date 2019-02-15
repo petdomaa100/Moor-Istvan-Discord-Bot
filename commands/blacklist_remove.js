@@ -80,8 +80,9 @@ module.exports.run = async (bot, message, args) => {
             .addField('Feltevés időpontja', USER.added, true)
             .addField('Levétel időpontja', moment.utc(new Date()).locale('hu').format('YYYY MMMM DD'), true)
             .setFooter('Én a helyében még mindíg félnék!')
-            .setTimestamp()
+            .setThumbnail(USER.avatar)
             .setColor('RANDOM')
+            .setTimestamp()
         message.channel.send(blacklistOutout);   
 
     }

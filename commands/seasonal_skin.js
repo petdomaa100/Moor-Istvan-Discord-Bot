@@ -12,32 +12,34 @@ module.exports.run = async (bot, message) => {
             .setFooter(`Helyes kód: tölts fel egy képet, majd az "Add Comment" részen bellül: ${prefix}seasonal_skin.`)
         message.channel.send(seasonalSkinBad1);
         return;
-    } else {
-        avatarImg = message.attachments.first().url;
+    }
+        
+    avatarImg = message.attachments.first().url;
 
-        try {
-            bot.user.setAvatar(avatarImg).then(() => {
-                let seasonal_skin_good = new Discord.RichEmbed()
-                    .setTitle('Átöltöztem!')
-                    .setColor('#0b16aa')
-                    .setThumbnail(bot.user.displayAvatarURL)
-                    .setDescription('Hogy festek?')
-                message.channel.send({embed: seasonal_skin_good});
-            });
+    var pre_MSG = await message.channel.send('*Csak egy pillanat...*');
 
-            console.log(`Bot's avatar has been changed: ${new Date()}.`);
-        } catch (error) {
-            if(error.message == 'Error:') {
-                let seasonalSkinBad2 = new Discord.RichEmbed()
-                    .setTitle('Szerencsétlen vagy!')
-                    .setColor('0xFF0000')
-                    .setThumbnail('https://i.imgur.com/Lgekz3D.png')
-                    .setDescription('10 percenként ezt csak **1x** tudok átöltözni!')
-                message.channel.send(seasonalSkinBad2);
-                return;
-            }
+    await bot.user.setAvatar(avatarImg).catch((error) => {
+        if(error.message.includes('You are changing your avatar too fast.')) {
+            var seasonalSkinBad2 = new Discord.RichEmbed()
+                .setTitle('Szerencsétlen vagy!')
+                .setColor('0xFF0000')
+                .setThumbnail('https://i.imgur.com/Lgekz3D.png')
+                .setDescription('10 percenként ezt csak **1x** tudok átöltözni!')
+            pre_MSG.delete();
+            message.channel.send(seasonalSkinBad2);
         }
-    }    
+        return 'ERROR';
+    }).then((thing) => {
+        if(thing == 'ERROR') return;
+
+        let seasonalSkinOutput = new Discord.RichEmbed()
+            .setTitle('Átöltöztem!')
+            .setColor('#RANDOM')
+            .setThumbnail(bot.user.displayAvatarURL)
+            .setDescription('Hogy festek?')
+        pre_MSG.delete();
+        message.channel.send(seasonalSkinOutput);
+    });
 }
 
 module.exports.help = {
