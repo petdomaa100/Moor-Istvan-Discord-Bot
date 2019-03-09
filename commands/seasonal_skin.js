@@ -47,6 +47,8 @@ module.exports.run = async (bot, message) => {
 
 module.exports.help = {
     name: 'seasonal_skin',
+    noalias: 'Nincs rokona',
+    aliases: [],
     p_usage: `Tölts fel egy képet, majd az "Add Comment" részen bellül írd be: ${prefix}seasonal_skin.`,
     description: 'Moór átöltözik az új trendy öltözékébe.',
     accessableby: 'Mindenki'
