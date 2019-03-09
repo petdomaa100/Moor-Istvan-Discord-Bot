@@ -51,28 +51,6 @@ module.exports.run = async (bot, message, args, prefix) => {
             loadMessage.edit(`__Reloading:__ \`${f}\` \n[${szazalek}] (${index}/${jsfile.length})`);
         });
     });
-
-    console.log('This executes before the fs.readdir finishes.');
-    
-    //loadMessage.edit('**Commandok újratöltve!**');
-
-    /*
-    let CHANNEL = message.guild.channels.find(channel => channel.id == '526037223196590080');
-
-    await Sleep(1000);
-
-    message.channel.send('**Újraindítom magam...**').then((msg) => {
-        bot.destroy().then(() => bot.login(botconfig.token)).then(() => {
-            msg.channel.send('Újraindultam.');
-
-            let rebootOutput = new Discord.RichEmbed()
-                .setTitle('Moór újraindult!')
-                .setDescription(`${message.author.username} újraindította Moór-t.`)
-                .setColor('#FF9900')
-                .setTimestamp()
-            CHANNEL.send(rebootOutput);
-        });
-    });*/
 }   
 
 module.exports.help = {
