@@ -22,7 +22,36 @@ module.exports.run = async (bot, message, args, prefix) => {
         return;
     }
 
-    await message.channel.bulkDelete(parseInt(args[0]) + 1);
+    const szam = Math.round(parseInt(args[0]));
+
+    if(!szam || szam < 1 || szam > 99) {
+        let clearBad2 = new Discord.RichEmbed()
+            .setTitle('Autista!')
+            .setColor('0xFF0000')
+            .setThumbnail('https://i.imgur.com/Lgekz3D.png')
+            .setDescription('Nem tudok kitörölni ennyi üzenetet!')
+            .setFooter('Minimum: 1db \xa0\xa0\xa0\xa0\xa0\xa0\xa0 Maximum: 99db')
+        message.channel.send(clearBad2);
+        return;
+    }
+
+    var error = false;
+
+    await message.channel.bulkDelete(szam + 1).catch(e => {
+        if(e.message.includes('You can only bulk delete messages that are under 14 days old.')) {
+            let clearBad3 = new Discord.RichEmbed()
+                .setTitle('OUFF!')
+                .setColor('0xFF0000')
+                .setThumbnail('https://i.imgur.com/Lgekz3D.png')
+                .setDescription('Nem tudok kitörölni 14 napnál régebbi üzenetet!')
+                .setFooter('Sajnos ez van... khm khm Discord')
+            message.channel.send(clearBad3);
+
+            error = true;
+        }
+    });
+
+    if(error == true) return;
 
     let clearOutput = new Discord.RichEmbed()
         .setTitle('Siker!')
