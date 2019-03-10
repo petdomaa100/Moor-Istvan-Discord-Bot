@@ -108,7 +108,8 @@ module.exports.run = async (bot, message, args, prefix) => {
     }
     
     else {
-        const video = await youtube.searchVideos(args.join(' '), 1);
+        const kereses = args.join(' ');
+        const video = await youtube.searchVideos(kereses, 1);
             
         if(video.length <= 0) {
             return message.channel.send(`A picsába! Nem találtam semmilyen videót erre a kulcsszóra: **${kereses}**`);    
