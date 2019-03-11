@@ -1,19 +1,33 @@
 const Discord = require('discord.js');
-const superagent = require('superagent');
+const request = require('request');
 
 module.exports.run = async (bot, message) => {
-    let {body} = await superagent
-        .get('https://random.dog/woof.json');
-
-    let pre_message_dog  = await message.channel.send('Már keresek is egy kutyát...');
+    let preMessage = await message.channel.send('Már keresek is egy kutyát...');
     
-    let dogOutput = new Discord.RichEmbed()
-        .setColor('RANDOM')
-        .setImage(body.url)
-        .setFooter(bot.user.username + ' szereti a kutyákat.', bot.user.displayAvatarURL)
-    message.channel.send(dogOutput);
+    dogRequest = function() {
+        request('https://random.dog/woof.json', function(err, resp, html) {
+            if(err || resp.statusCode != 200) {
+                preMessage.edit('lol, valami baj vana szerverrrel...').then((msg) => msg.delete(3000));
+                return;
+            }
 
-    pre_message_dog.delete();
+            kutya = JSON.parse(html).url;
+
+            const kutyaSplitted = kutya.split('.');
+    
+            if(kutyaSplitted[kutyaSplitted.length - 1] == 'mp4') {
+                dogRequest();
+            } else {
+                let randomdogOutput = new Discord.RichEmbed()
+                    .setColor('RANDOM')
+                    .setImage(kutya)
+                    .setFooter('Moór István szereti a kutyákat.', bot.user.displayAvatarURL)
+                preMessage.edit(randomdogOutput);    
+            }
+        });
+    }
+
+    dogRequest();
 }
 
 module.exports.help = {
