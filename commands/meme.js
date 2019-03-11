@@ -1,21 +1,25 @@
 const Discord = require('discord.js');
-const superagent = require('superagent');
+const request = require('request');
 
 module.exports.run = async (bot, message) => {
-    let pre_message_meme  = await message.channel.send('Igenis Gordon Kapitány! már készítem is...');
+    let preMessage = await message.channel.send('Igenis Gordon Kapitány! már készítem is...');
     
-    let {body} = await superagent
-        .get('https://api-to.get-a.life/meme');
+    memeRequest = function() {
+        request('https://api-to.get-a.life/meme', function(err, resp, html) {
+            if(err || resp.statusCode != 200) {
+                preMessage.edit('ouff, valami baj vana szerverrrel...').then((msg) => msg.delete(3000));
+                return;
+            }
 
-    if(!{body}) return message.channel.send('A server elbaszódott...')
-    
-    let randomMemeEmbed = new Discord.RichEmbed()
-        .setColor('RANDOM')
-        .setImage(body.url)
-        .setFooter(bot.user.username + ' szereti a meme-eket.', bot.user.displayAvatarURL)
-    message.channel.send(randomMemeEmbed);
+            let randomMemeOutput = new Discord.RichEmbed()
+                .setColor('RANDOM')
+                .setImage(JSON.parse(html).url)
+                .setFooter('Moór István szereti a meme-eket.', bot.user.displayAvatarURL)
+            preMessage.edit(randomMemeOutput);
+        });
+    }
 
-    pre_message_meme.delete();
+    memeRequest();
 }
 
 module.exports.help = {
