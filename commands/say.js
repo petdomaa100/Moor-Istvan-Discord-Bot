@@ -5,8 +5,8 @@ module.exports.run = async (bot, message, args) => {
 		sayBad = new Discord.RichEmbed()
 			.setTitle('ISTENEM!')
 			.setDescription('Nem is adtad meg higy mit mondjak!')
-            .setColor('0xFF0000')
-            .setThumbnail('https://i.imgur.com/Lgekz3D.png')
+            		.setColor('0xFF0000')
+            		.setThumbnail('https://i.imgur.com/Lgekz3D.png')
 		message.channel.send(sayBad);
 		return;
 	}
