@@ -29,7 +29,7 @@ module.exports = bot => {
             }    
         }
     }, 1200000);
-    
+    /*
     const url1 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&key=' + process.env.YT_API_KEY;
     const url2 = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UCq-Fj5jknLsUf-MWSy4_brA&key=' + process.env.YT_API_KEY;
 
@@ -61,6 +61,7 @@ module.exports = bot => {
             }
         });
     }, 10000);
+    */
 
     //bot.user.setAvatar(botconfig.moor_avatar);
 
