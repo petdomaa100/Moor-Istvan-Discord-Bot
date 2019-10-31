@@ -1,9 +1,9 @@
 const Discord = require('discord.js');
 
 module.exports.run = async (bot, message, args) => {
-    if(!args[0]) return message.channel.send('More, nem adtál meg egy emoji-t!');
-
     await message.delete();
+
+    if(!args[0]) return message.channel.send('More, nem adtál meg egy emoji-t!').then((msg) => msg.delete(2500));
 
     message.channel.fetchMessages({ limit: 1 }).then(messages => {
         let emogjMessageArray = args[0].split(':');
@@ -20,7 +20,7 @@ module.exports.run = async (bot, message, args) => {
         let emogj = msg.guild.emojis.find(x => x.name == EMOGJ);
 
         if(!emogj) {
-            return message.channel.send('Bocs, valami baj történt... Valószínűleg elcseszted az emogj nevét... Szokásosan...').then((msg) => msg.delete(3000));
+            return message.channel.send('Valami baj történt... Valószínűleg elcseszted az emogj nevét... Szokásosan...').then((msg) => msg.delete(2500));
         } 
 
         msg.react(emogj);
@@ -29,8 +29,9 @@ module.exports.run = async (bot, message, args) => {
 
 module.exports.help = {
     name: 'react',
-    aliases: ['reagálj'],
+    noalias: 'Nincs rokona',
+    aliases: [],
     usage: 'react <emoji neve>',
-    description: 'Reagál az előző üzenetre a kiválasztott emojival.',
+    description: 'Moór reagál az előző üzenetre a kiválasztott emojival.',
     accessableby: 'Mindenki'
 }

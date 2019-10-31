@@ -1,11 +1,11 @@
 const Discord = require('discord.js');
 
-module.exports.run = async (bot, message, prefix) => {
+module.exports.run = async (bot, message) => {
     if(message.member.voiceChannel !== message.guild.me.voiceChannel) {
         var nextBad1 = new Discord.RichEmbed()
-            .setTitle('Elbasztad!')
-            .setDescription('Moór azt nem tudja megcsinálni!')
-            .setFooter('Ugan abban a Voice Channel-ben kell lenned, mindt Moór.')
+            .setTitle(outputMessageRandomiser('anyazasEleje'))
+            .setDescription(outputMessageRandomiser('UserNotInVC'))
+            .setFooter(outputMessageRandomiser('anyazasVege'))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
         message.channel.send(nextBad1);
@@ -15,18 +15,18 @@ module.exports.run = async (bot, message, prefix) => {
     if(message.guild.dispatcher) {
         message.guild.dispatcher.end();
 
-        var next_good = new Discord.RichEmbed()
-            .setTitle('Értettem!')
-            .setDescription('Moór átugorja ezt a zenét!')
-            .setFooter('Moór remek DJ, de azért még van mit tanulnia.')
+        var nextGood = new Discord.RichEmbed()
+            .setTitle(outputMessageRandomiser('sikerEleje'))
+            .setDescription(outputMessageRandomiser('!nextSiker'))
+            .setFooter(outputMessageRandomiser('sikerVege'))
             .setColor('0x008000')
             .setThumbnail('https://i.imgur.com/JCBGbiw.png')
-        message.channel.send({embed: next_good});
+        message.channel.send(nextGood);
     } else {
         var nextBad2 = new Discord.RichEmbed()
-            .setTitle('Elkúrtad!')
-            .setDescription('Nem is megy zene!')
-            .setFooter(`Elindíthatsz zenét a ${prefix}play commandal.`)
+            .setTitle(outputMessageRandomiser('anyazasEleje'))
+            .setDescription(outputMessageRandomiser('noMusicPlaying'))
+            .setFooter(outputMessageRandomiser('AnyazasVege'))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
         message.channel.send(nextBad2);
@@ -34,8 +34,8 @@ module.exports.run = async (bot, message, prefix) => {
 }
 module.exports.help = {
     name: 'next',
-    aliases: ['skip', 'kövi'],
+    aliases: ['skip'],
     usage: 'next',
-    description: 'Átugorja az épp jétszó zenét.',
+    description: 'Moór átugorja az épp jétszó zenét.',
     accessableby: 'Mindenki'
 }

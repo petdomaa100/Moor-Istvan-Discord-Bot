@@ -3,9 +3,9 @@ const Discord = require('discord.js');
 module.exports.run = async (bot, message, args, prefix) => {
     if(args[0]) {
         let suggestBad1 = new Discord.RichEmbed()
-            .setTitle('BUZI')
+            .setTitle(outputMessageRandomiser('anyazasEleje'))
             .setDescription(`Csak simán írd be, hogy **${prefix}suggest**`)
-            .setFooter('Nyomorék...')
+            .setFooter(outputMessageRandomiser('anyazasVege'))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
         message.channel.send(suggestBad1);
@@ -13,9 +13,9 @@ module.exports.run = async (bot, message, args, prefix) => {
     }
 
     let sugOptions = new Discord.RichEmbed()
-        .setTitle('Remek!')
+        .setTitle(outputMessageRandomiser('sikerEleje'))
         .setDescription('Írd le a kérelmedet, de ne légyék köcsög, mert annak is 50-es lista lesz a vége!')
-        .setFooter('2 perced van! A  CANCEL  beírásával eldobhatod a kérelmedet.')
+        .setFooter('2 perced van! A  `CANCEL`  beírásával eldobhatod a kérelmedet.')
         .setColor('RANDOM')
         .setTimestamp()
     var sugOptionsMSG = await message.channel.send(sugOptions);
@@ -25,7 +25,7 @@ module.exports.run = async (bot, message, args, prefix) => {
     } catch (error) {
         message.delete();
         sugOptionsMSG.delete();
-        message.reply('TE BUZI, lejárt az időd! Letelt a 2 perc. Próbéld újra.').then((msg) => msg.delete(4000));
+        message.reply('TE BUZI, lejárt az időd! Letelt a 2 perc. Próbáld újra.').then((msg) => msg.delete(4000));
         return;
     }
 
@@ -39,6 +39,7 @@ module.exports.run = async (bot, message, args, prefix) => {
         let suggestCancel = new Discord.RichEmbed()
             .setTitle('OK boss.')
             .setDescription('Kérelem eldobva!')
+            .setFooter(outputMessageRandomiser('sikerVege'))
             .setColor('RANDOM')
         message.channel.send(suggestCancel).then((msg) => msg.delete(5000));
         return;
@@ -54,9 +55,9 @@ module.exports.run = async (bot, message, args, prefix) => {
     await PERSON.send(suggestionOutput1);
     
     let suggestionOutput2 = new Discord.RichEmbed()
-        .setTitle('Kész!')
+        .setTitle(outputMessageRandomiser('sikerEleje'))
         .setDescription(`${message.author.username}, elmentettem a kérésedet te csicska.`)
-        .setFooter('Legyél türelmes, vagy 50 lista lesz ennek is a vége.')
+        .setFooter(outputMessageRandomiser('sikerVege'))
         .setTimestamp()
         .setColor('0x008000')
     message.channel.send(suggestionOutput2);
@@ -66,6 +67,6 @@ module.exports.help = {
     name: 'suggest',
     aliases: ['kérelem'],
     usage: 'suggest',
-    description: 'Elküldi a kérelmedet, amit idővel be is fog egy Bot Admin rakni.  (no homo)',
+    description: 'Moór elküldi a kérelmedet, amit idővel lehet hogy be is fog egy Bot Admin rakni.  (no homo)',
     accessableby: 'Mindenki'
 }

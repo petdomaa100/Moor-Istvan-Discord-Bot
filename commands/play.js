@@ -3,15 +3,16 @@ const YTDL = require('ytdl-core');
 const YouTube = require('simple-youtube-api');
 const botconfig = require('../botconfig.json');
 const TimeFormat = require('hh-mm-ss');
+const fetchVideoInfo = require('youtube-info');
 
-module.exports.run = async (bot, message, args, prefix) => {
-    const youtube = new YouTube(process.env.YT_API_KEY);
+module.exports.run = async (bot, message, args) => {
+    const youtube = new YouTube(botconfig.yt_api_key);
 
     if(!args[0]) {
         var playBad1 = new Discord.RichEmbed()
-            .setTitle('Elbasztad!')
-            .setDescription('Moór nem tudja a semmit lejátszani!')
-            .setFooter(`Helyes commad használat: ${prefix}play <keresési kulcsszavak>`)
+            .setTitle(outputMessageRandomiser('anyazasEleje'))
+            .setDescription(outputMessageRandomiser('!play-noArgs'))
+            .setFooter(outputMessageRandomiser('anyazasVege'))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
         message.channel.send(playBad1);
@@ -20,9 +21,9 @@ module.exports.run = async (bot, message, args, prefix) => {
 
     if(!message.member.voiceChannel) {
         var playBad3 = new Discord.RichEmbed()
-            .setTitle('Retaldált vagy!')
-            .setDescription('Moór nem tud hozzád join-olni!')
-            .setFooter('Benne kell hogy legyél egy Voice Channel-ben!')
+            .setTitle(outputMessageRandomiser('anyazasVege'))
+            .setDescription(outputMessageRandomiser('UserNotInVC'))
+            .setFooter(outputMessageRandomiser('anyazasVege'))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
         message.channel.send(playBad3);
@@ -45,62 +46,95 @@ module.exports.run = async (bot, message, args, prefix) => {
         });
     }
 
-    if(args[0].startsWith('https://www.youtube.com/playlist?list=')) {
+    if(args[0].startsWith('https://www.youtube.com/playlist?')) {
+        let error = false;
 
-        const playlist = await youtube.getPlaylist(args[0]);
+        const playlist = await youtube.getPlaylist(args[0]).catch((err) => {
+            if(err.message.includes('youtube#playlistListResponse not found')) {
+                message.channel.send('Ups, ez a playlist Privát, Moór nem tudja meghallgatni.');
+            }
 
+            error = true;
+        });
+
+        if(error == true) return;
+        
         const playlistVideos = await playlist.getVideos();
+        
+        playlistPreMSG = await message.channel.send(`Moór már dolgozik is rajta. \`(0/${playlistVideos.length})\``)
 
         for (let i = 0; i < playlistVideos.length; i++) {
             const video = playlistVideos[i];
             const valid = YTDL.validateURL(video.url);
 
             if (valid == true) {
-                const song = await YTDL.getInfo(video.url);
+                const song = await fetchVideoInfo(video.id);
 
                 const zeneObject = {
                     title: song.title,
-                    url: video.shortURL,
-                    duration: song.player_response.videoDetails.isLive == true ? '🔴 LIVE' : '[' + TimeFormat.fromS(parseInt(song.length_seconds, 'mm:ss')) + ']',
-                    lengthInSec: song.length_seconds,
-                    thumbnail: song.thumbnail_url,
-                    channel: song.author.name,
+                    channel: song.owner,
+                    id: song.videoId,
+                    url: `https://youtu.be/${video.id}`,
+                    duration: song.duration == 0 ? '🔴 LIVE' : '[' + TimeFormat.fromS(parseInt(song.duration, 'mm:ss')) + ']',
+                    lengthInSec: song.duration,
+                    published: song.datePublished.split('-').join('/'),
+                    genre: song.genre,
+                    viewCount: Number(song.views),
+                    likes: song.likeCount,
+                    dislikes: song.dislikeCount,
+                    comments: song.commentCount,
+                    thumbnail: song.thumbnailUrl
                 }
-            
+                                
                 queue.push(zeneObject);
+
+                playlistPreMSG.edit(`Moór már dolgozik is rajta. \`(${i + 1}/${playlistVideos.length})\``)
             }
         }
-
-        if(!message.guild.voiceConnection) message.member.voiceChannel.join().then((voicechannel) => {
-            play(voicechannel);
-        });
+        
+        if(!message.guild.voiceConnection) message.member.voiceChannel.join().then((voicechannel) => play(voicechannel));
 
         let playlistOutput = new Discord.RichEmbed()
-            .setAuthor('Hozzáadtam a lejátszási listához!', '', args[0])
+            .setAuthor('Moór hozzáadta a lejátszási listához!', '', args[0])
             .setDescription(`__Playlist Neve:__ ${playlist.title.length > 43 ? playlist.title.substring(0, 43) + '...' : playlist.title} \n__Zenék száma:__ **${playlistVideos.length}**`)
-            .setFooter('Remek zenész vagyok')
+            .setFooter(outputMessageRandomiser('sikerVege'))
             .setColor('#f15a35')
             .setThumbnail('https://i.imgur.com/8LaIJTB.png')
             .setTimestamp()
-        message.channel.send(playlistOutput);
+        playlistPreMSG.edit(playlistOutput);
         return;
     }
     
     if(args[0].startsWith('https://www.youtube.com/')) {
-        const valid = await YTDL.validateURL(args[0]);
+        let error = false;
 
+        const valid = await YTDL.validateURL(args[0]);
+        
         if (valid == true) {
-            const song = await YTDL.getInfo(args[0]);
+            const song = await fetchVideoInfo(args[0].split('v=')[1]).catch(() => {
+                message.channel.send('OOF \nValami kurva nagy baj van, és ez most nem működik.');
+                
+                error = true;    
+            });
+
+            if(error == true) return;
 
             const zeneObject = {
                 title: song.title,
-                url: `https://youtu.be/${song.video_id}`,
-                duration: song.player_response.videoDetails.isLive == true ? '🔴 LIVE' : '[' + TimeFormat.fromS(parseInt(song.length_seconds, 'mm:ss')) + ']',
-                lengthInSec: song.length_seconds,
-                thumbnail: song.thumbnail_url,
-                channel: song.author.name,
+                channel: song.owner,
+                id: song.videoId,
+                url: `https://youtu.be/${song.id}`,
+                duration: song.duration == 0 ? '🔴 LIVE' : '[' + TimeFormat.fromS(parseInt(song.duration, 'mm:ss')) + ']',
+                lengthInSec: song.duration,
+                published: song.datePublished.split('-').join('/'),
+                genre: song.genre,
+                viewCount: Number(song.views),
+                likes: song.likeCount,
+                dislikes: song.dislikeCount,
+                comments: song.commentCount,
+                thumbnail: song.thumbnailUrl
             }
-    
+
             queue.push(zeneObject);
         } else {
             return message.channel.send(`A picsába! Nem találtam semmilyen videót erre a linkre: **${args[0]}**`);
@@ -114,41 +148,47 @@ module.exports.run = async (bot, message, args, prefix) => {
         if(video.length <= 0) {
             return message.channel.send(`A picsába! Nem találtam semmilyen videót erre a kulcsszóra: **${kereses}**`);    
         } else {
-            const song = await YTDL.getInfo(video[0].url);
+            const song = await fetchVideoInfo(video[0].id);
 
             const zeneObject = {
                 title: song.title,
-                url: video[0].shortURL,
-                duration: song.player_response.videoDetails.isLive == true ? '🔴 LIVE' : '[' + TimeFormat.fromS(parseInt(song.length_seconds, 'mm:ss')) + ']',
-                lengthInSec: song.length_seconds,
-                thumbnail: song.thumbnail_url,
-                channel: song.author.name,
+                channel: song.owner,
+                id: song.videoId,
+                url: `https://youtu.be/${video[0].id}`,
+                duration: song.duration == 0 ? '🔴 LIVE' : '[' + TimeFormat.fromS(parseInt(song.duration, 'mm:ss')) + ']',
+                lengthInSec: song.duration,
+                published: song.datePublished.split('-').join('/'),
+                genre: song.genre,
+                viewCount: Number(song.views),
+                likes: song.likeCount,
+                dislikes: song.dislikeCount,
+                comments: song.commentCount,
+                thumbnail: song.thumbnailUrl
             }
-    
+
             queue.push(zeneObject);
         }
     }
 
-    if(!message.guild.voiceConnection) message.member.voiceChannel.join().then((voicechannel) => {
-        play(voicechannel);
-    });
-    
-    const song = queue[queue.length - 1];
+    const Song = queue[queue.length - 1];
+
+    if(!message.guild.voiceConnection) message.member.voiceChannel.join().then((voicechannel) => play(voicechannel));
         
     let playOutput = new Discord.RichEmbed()
-        .setAuthor('Hozzáadtam a lejátszási listához!', '', song.url)
-        .setDescription(`__Zene Neve:__ ${song.title.length > 43 ? song.title.substring(0, 43) + '...' : song.title} **${song.duration}** \n__Csatorna:__ ${song.channel}`)
-        .setFooter('Moór remek DJ, de még van mit tanulnia', song.thumbnail)
+        .setAuthor('Moór hozzáadta a lejátszási listához!', '', Song.url)
+        .setDescription(`__Zene Neve:__ ${Song.title.length > 43 ? Song.title.substring(0, 43) + '...' : Song.title } **${Song.duration}** \n__Csatorna:__ ${Song.channel} \n__Közzétett:__ \`${Song.published}\` **|-|** __Category:__ \`${Song.genre}\` \n 👁 ${Separate(Song.viewCount, ' ')} **|-|** 👍 ${Song.likes} **|-|** 👎 ${Song.dislikes} **|-|** 🗨 ${Song.comments}`)
+        .setFooter(outputMessageRandomiser('sikerVege'), Song.thumbnail)
         .setColor('#f15a35')
         .setThumbnail('https://i.imgur.com/8LaIJTB.png')
         .setTimestamp()
     message.channel.send(playOutput);
+
 }
 
 module.exports.help = {
     name: 'play',
     aliases: ['p', 'csapassad'],
-    usage: 'play <yt_link/keresési kulcsszó>',
-    description: 'Lejátsza a kívánt nezét abba a Voice Channel-be amiben vagy.',
+    usage: 'play <yt_link/keresési kulcsszó/yt_playlist>',
+    description: 'Moór lejátsza a kívánt zenét, abba a Voice Channel-be amiben vagy.',
     accessableby: 'Mindenki'
 }

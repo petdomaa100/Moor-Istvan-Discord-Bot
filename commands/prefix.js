@@ -1,9 +1,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 
-module.exports.run = async (bot, message, args, prefix) => {
-    const prefixJSON = require('../data/prefix.json');
-
+module.exports.run = async (bot, message, args, prefix, prefixJSON) => {
     if(!prefixJSON.prefix) {
         let prefixBad1 = new Discord.RichEmbed()
             .setTitle('Ujjuj!')
@@ -11,14 +9,18 @@ module.exports.run = async (bot, message, args, prefix) => {
             .setFooter('Írd meg @petdomaa100-nak!')
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
-        message.channel.send(prefixBad1);
+        message.channel.send(prefixBad1).then((msg) => msg.delete(2500));
+        message.delete(2500);
         return;
     }
 
-    if(!message.member.hasPermission('ADMINISTRATOR')) {
+    console.log(message.author.id);
+
+    if(!message.author.id != '346946719440830466') {
         let prefixBad1 = new Discord.RichEmbed()
-            .setTitle('BUZI')
-            .setDescription('Neked erre nincs engedélyed!')
+            .setTitle(outputMessageRandomiser('anyazasEleje'))
+            .setDescription(outputMessageRandomiser('noPermission'))
+            .setFooter(outputMessageRandomiser('anyazasVege'))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
         message.channel.send(prefixBad1);
@@ -27,18 +29,18 @@ module.exports.run = async (bot, message, args, prefix) => {
 
     if(!args[0]) {
         let prefixBad2 = new Discord.RichEmbed()
-            .setTitle('Moór prefix-e')
-            .setDescription(`Prefix: **${prefixJSON.prefix}**`)
+            .setTitle(outputMessageRandomiser('anyazasEleje'))
+            .setDescription(outputMessageRandomiser('!prefix-noArgs'))
             .setColor('#FF9900')
-            .setFooter(`Prefix átállítása: ${prefix}prefix <új prefix ide>`)
+            .setFooter(outputMessageRandomiser('anyazasVege'))
         message.channel.send(prefixBad2);
         return;
     }
 
     if(args[0] == prefixJSON.prefix) {
         let prefixBad3 = new Discord.RichEmbed()
-            .setTitle('Szerencsétlen vagy!')
-            .setDescription(`A prefix már alapból: **${args[0]}**`)
+            .setTitle(outputMessageRandomiser('anyazasEleje'))
+            .setDescription(outputMessageRandomiser('!prefix-prefixIsTheSame'))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
         message.channel.send(prefixBad3);
@@ -56,6 +58,7 @@ module.exports.run = async (bot, message, args, prefix) => {
             .setTitle('Prefix átállítva!')
             .setColor('#FF9900')
             .setDescription(`Új prefix: **${args[0]}**`)
+            .setFooter(outputMessageRandomiser('sikerVege'))
         message.channel.send(prefixOutput);
     });
 
@@ -66,6 +69,6 @@ module.exports.help = {
     noalias: 'Nincs rokona',
     aliases: [],
     usage: 'prefix <úr prefix>',
-    description: 'Átállítja a prefix-et.',
-    accessableby: 'Adminok'
+    description: 'Moór átállítja a prefix-ét.',
+    accessableby: '@petdomaa100'
 }

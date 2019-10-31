@@ -11,9 +11,10 @@ module.exports.run = async (bot, message, args) => {
     if(!CHANNEL) return message.channel.send('Nem találtam meg a **reportok-⛔** channel-t.');
 
     let preReportEmbed = new Discord.RichEmbed()
-        .setTitle('Értettem!')
+        .setTitle(outputMessageRandomiser('sikerEleje'))
         .setColor('#ff0000')
         .setDescription(`A report megtekinthető a **${CHANNEL.name}** text channel-ben.`)
+        .setFooter('sikerVege')
         .setTimestamp()
     message.channel.send(preReportEmbed);
     
@@ -21,7 +22,7 @@ module.exports.run = async (bot, message, args) => {
         .setTitle('Csúnya viselkedés!')
         .setColor('#ff0000')
         .setThumbnail('https://i.imgur.com/mQ3h6R7.png')
-        .setDescription(`${message.author} beköpte ${rUser}-t. Ezért most \nMoór mindkettőjüket kiküldöm a teremből!`)
+        .setDescription(`${message.author} beköpte ${rUser}-t. Ezért most \nMoór mindkettőjüket kiküldi a teremből!`)
         .addField('Oka: ', reason)
         .setTimestamp()
     CHANNEL.send(reportEmbed);

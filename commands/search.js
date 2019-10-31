@@ -3,15 +3,16 @@ const YTDL = require('ytdl-core');
 const YouTube = require('simple-youtube-api');
 const botconfig = require('../botconfig.json');
 const TimeFormat = require('hh-mm-ss');
+const fetchVideoInfo = require('youtube-info');
 
-module.exports.run = async (bot, message, args, prefix) => {
-    const youtube = new YouTube(process.env.YT_API_KEY);
+module.exports.run = async (bot, message, args) => {
+    const youtube = new YouTube(botconfig.yt_api_key);
 
     if(!args[0]) {
         var playBad1 = new Discord.RichEmbed()
-            .setTitle('Elbasztad!')
-            .setDescription('Moór nem tudja a semmit lejátszani!')
-            .setFooter(`Helyes commad használat: ${prefix}play <keresési kulcsszavak>`)
+            .setTitle(outputMessageRandomiser('anyazasEleje'))
+            .setDescription(outputMessageRandomiser('!play-noArgs'))
+            .setFooter(outputMessageRandomiser('anyazasVege'))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
         message.channel.send(playBad1);
@@ -20,13 +21,29 @@ module.exports.run = async (bot, message, args, prefix) => {
 
     if(!message.member.voiceChannel) {
         var playBad3 = new Discord.RichEmbed()
-            .setTitle('Retaldált vagy!')
-            .setDescription('Moór nem tud hozzád join-olni!')
-            .setFooter('Benne kell hogy legyél egy Voice Channel-ben!')
+            .setTitle(outputMessageRandomiser('anyazasVege'))
+            .setDescription(outputMessageRandomiser('UserNotInVC'))
+            .setFooter(outputMessageRandomiser('anyazasVege'))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
         message.channel.send(playBad3);
         return;
+    }
+
+    function play(voicechannel) {
+        message.guild.dispatcher = voicechannel.playStream(YTDL(queue[0].url, { filter: 'audioonly', quality: 'highestaudio' }));
+        
+        nowPlaying = queue[0];
+        queue.shift();
+
+        message.guild.dispatcher.on('end', function() {
+            if (queue.length >= 1) {
+                play(voicechannel)
+            } else {
+                voicechannel.disconnect();
+                nowPlaying = null;
+            }
+        });
     }
 
     let kereses = args.join(' ');
@@ -58,17 +75,24 @@ module.exports.run = async (bot, message, args, prefix) => {
         return;
     }
 
-    if(response) {
-        const song = await YTDL.getInfo(results[parseInt(response.first().content) - 1].url);
+    if(response) {        
+        const song = await fetchVideoInfo(results[parseInt(response.first().content) - 1].id);
 
         const zeneObject = {
             title: song.title,
-            url: results[parseInt(response.first().content) - 1].shortURL,
-            duration: song.player_response.videoDetails.isLive == true ? '🔴 LIVE' : '[' + TimeFormat.fromS(parseInt(song.length_seconds, 'mm:ss')) + ']',
-            lengthInSec: song.length_seconds,
-            thumbnail: song.thumbnail_url,
-            channel: song.author.name,
-        }
+            channel: song.owner,
+            id: song.videoId,
+            url: `https://youtu.be/${results[parseInt(response.first().content) - 1].id}`,
+            duration: song.duration == 0 ? '🔴 LIVE' : '[' + TimeFormat.fromS(parseInt(song.duration, 'mm:ss')) + ']',
+            lengthInSec: song.duration,
+            published: song.datePublished.split('-').join('/'),
+            genre: song.genre,
+            viewCount: Number(song.views),
+            likes: song.likeCount,
+            dislikes: song.dislikeCount,
+            comments: song.commentCount,
+            thumbnail: song.thumbnailUrl
+    }
 
         queue.push(zeneObject);
         response.first().delete();
@@ -91,20 +115,18 @@ module.exports.run = async (bot, message, args, prefix) => {
         });
     };
 
-    if(!message.guild.voiceConnection) message.member.voiceChannel.join().then((voicechannel) => {
-        play(voicechannel);
-    });
+    const Song = queue[queue.length - 1];
 
-    const song = queue[queue.length - 1];
-            
-    let playOutput = new Discord.RichEmbed()
-        .setAuthor('Hozzáadtam a lejátszási listához!', '', song.video_url)
-        .setDescription(`__Zene Neve:__ ${song.title.length > 43 ? song.title.substring(0, 43) + '...' : song.title} **${song.duration}** \n__Csatorna:__ ${song.channel}`)
-        .setFooter('Moór remek DJ, de még van mit tanulnia', song.thumbnail_url)
+    if(!message.guild.voiceConnection) message.member.voiceChannel.join().then((voicechannel) => play(voicechannel));
+        
+    let searchOutputFinal = new Discord.RichEmbed()
+        .setAuthor('Moór hozzáadta a lejátszási listához!', '', Song.url)
+        .setDescription(`__Zene Neve:__ ${Song.title.length > 43 ? Song.title.substring(0, 43) + '...' : Song.title } **${Song.duration}** \n__Csatorna:__ ${Song.channel} \n__Közzétett:__ \`${Song.published}\` **|-|** __Category:__ \`${Song.genre}\` \n 👁 ${Separate(Song.viewCount, ' ')} **|-|** 👍 ${Song.likes} **|-|** 👎 ${Song.dislikes} **|-|** 🗨 ${Song.comments}`)
+        .setFooter(outputMessageRandomiser('sikerVege'), Song.thumbnail)
         .setColor('#f15a35')
         .setThumbnail('https://i.imgur.com/8LaIJTB.png')
         .setTimestamp()
-    message.channel.send(playOutput);
+    message.channel.send(searchOutputFinal);
 }
 
 module.exports.help = {

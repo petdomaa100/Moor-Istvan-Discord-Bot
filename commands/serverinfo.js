@@ -16,7 +16,7 @@ module.exports.run = async (bot, message, args) => {
         .addField('Régió:', message.guild.region, true)
         .addField('Elkészült:', moment.utc(message.guild.createdAt).locale('hu').format('YYYY MMMM DD'), true)
         .addField('Role-ok:', message.guild.roles.map(roles => roles.name).slice(1).join(', '))
-        .setFooter('Ez a szerver kizárólag saját felelősséggel használható! **cringe warning**')
+        .setFooter('Ez a szerver kizárólag csak saját felelősséggel használható! **cringe warning**')
         .setTimestamp()
     message.channel.send(serverInfo);
 }
@@ -24,7 +24,7 @@ module.exports.run = async (bot, message, args) => {
 module.exports.help = {
     name: 'serverinfo',
     usage: 'serverinfo',
-    description: 'Alap info-t ad a szerverről.',
+    description: 'Alap infót ad a szerverről.',
     aliases: ['si'],
     accessableby: 'Mindenki'
 }

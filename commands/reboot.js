@@ -5,8 +5,9 @@ const fs = require('fs');
 module.exports.run = async (bot, message, args, prefix) => {
     if(!message.member.hasPermission('ADMINISTRATOR')) {
         let rebootBad1 = new Discord.RichEmbed()
-            .setTitle('Autista!')
-            .setDescription('Neked erre nincs engedélyed!')
+            .setTitle(outputMessageRandomiser('anyazasEleje'))
+            .setDescription(outputMessageRandomiser('noPermission'))
+            .setFooter(outputMessageRandomiser('anyazasVege'))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
         message.channel.send(rebootBad1);
@@ -55,8 +56,8 @@ module.exports.run = async (bot, message, args, prefix) => {
         await Sleep(2000);
 
         await loadMessage.edit('**Újraindítom magam...**').then(() => {
-            bot.destroy().then(() => bot.login(process.env.TOKEN)).then(() => {
-                loadMessage.edit('**Újraindultam.**');
+            bot.destroy().then(() => bot.login(botconfig.token)).then(async() => {
+                await loadMessage.edit('**Újraindultam.**');
         
                 let rebootOutput = new Discord.RichEmbed()
                     .setTitle('Moór újraindult!')

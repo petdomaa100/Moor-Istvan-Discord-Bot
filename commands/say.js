@@ -3,10 +3,11 @@ const Discord = require('discord.js');
 module.exports.run = async (bot, message, args) => {
 	if(!args[0]) {
 		sayBad = new Discord.RichEmbed()
-			.setTitle('ISTENEM!')
+			.setTitle(outputMessageRandomiser('anyazasEleje'))
 			.setDescription('Nem is adtad meg higy mit mondjak!')
-            		.setColor('0xFF0000')
-            		.setThumbnail('https://i.imgur.com/Lgekz3D.png')
+			.setFooter(outputMessageRandomiser('anyazasVege'))
+            .setColor('0xFF0000')
+            .setThumbnail('https://i.imgur.com/Lgekz3D.png')
 		message.channel.send(sayBad);
 		return;
 	}
@@ -19,6 +20,6 @@ module.exports.help = {
   name: 'say',
   aliases: ['mond', 'szavald'],
   usage: 'say <amit ki szeretnél mondatni Moórral>',
-  description: 'Kimondja amit a command után írtál.',
+  description: 'moór kimondja amit a command után írtál.',
   accessableby: 'Mindenki'
 }

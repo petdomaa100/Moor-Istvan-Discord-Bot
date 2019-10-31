@@ -7,7 +7,7 @@ module.exports.run = async (bot, message) => {
     dogRequest = function() {
         request('https://random.dog/woof.json', function(err, resp, html) {
             if(err || resp.statusCode != 200) {
-                preMessage.edit('lol, valami baj vana szerverrrel...').then((msg) => msg.delete(3000));
+                preMessage.edit('OOF, valami baj vana szerverrel...').then((msg) => msg.delete(3000));
                 return;
             }
 
@@ -21,7 +21,7 @@ module.exports.run = async (bot, message) => {
                 let randomdogOutput = new Discord.RichEmbed()
                     .setColor('RANDOM')
                     .setImage(kutya)
-                    .setFooter('Moór István szereti a kutyákat.', bot.user.displayAvatarURL)
+                    .setFooter(outputMessageRandomiser('!dogSiker'), bot.user.displayAvatarURL)
                 preMessage.edit(randomdogOutput);    
             }
         });

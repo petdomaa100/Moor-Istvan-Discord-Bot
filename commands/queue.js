@@ -1,20 +1,19 @@
 const Discord = require('discord.js');
-const YTDL = require('ytdl-core');
 const TimeFormat = require('hh-mm-ss');
 
-module.exports.run = async (bot, message, args, prefix) => {
+module.exports.run = async (bot, message) => {
     if(nowPlaying == null) {
         let queueBad1 = new Discord.RichEmbed()
-            .setTitle('Autista!')
-            .setDescription('Nem is megy semmilyen zene!')
-            .setFooter(`Elindíthatsz egyet a ${prefix}play commandal.`)
+            .setTitle(outputMessageRandomiser('anyazasEleje'))
+            .setDescription(outputMessageRandomiser('noMusicPlaying'))
+            .setFooter(outputMessageRandomiser('anyazasVege'))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
         message.channel.send(queueBad1);
         return;
     }
 
-    var idotartam = 0;
+    var idotartam = parseInt(nowPlaying.lengthInSec);
 
     let lista = [];
 
@@ -27,12 +26,10 @@ module.exports.run = async (bot, message, args, prefix) => {
         lista.push(`\xa0\xa0 **${sorszam}) - ** ${song.title.length > 40 ? song.title.substring(0, 40) + '...' : song.title} **${song.duration}**`)
     }
 
-    console.log(idotartam);
-
     let queueOutput = new Discord.RichEmbed()
         .setTitle(queue.length >= 1 ? 'Lejátszási lista:' : 'Now Playing:')
-        .setDescription(queue.length >= 1 ? `**${lista.length}db** zene van a lejátszási listában. \n\n__Now Playing:__ \n\n ${nowPlaying.title} **${nowPlaying.duration}** \n\n __Lejátszási Lista:__ \n\n${lista.join('\n\n')}` : `${nowPlaying.title} **${nowPlaying.duration}**`)
-        .setFooter(queue.length >= 1 ? 'Moór remek DJ, de még van mit tanulnia.' : '')
+        .setDescription(queue.length >= 1 ? `**${lista.length}db** zene van a lejátszási listában. \n\n__Now Playing:__ \n\n ${nowPlaying.title} **${nowPlaying.duration}** \n\n __Lejátszási Lista:__ \n\n${lista.join('\n\n')} ${queue.length >= 1 ? `\n\n__Összesen:__ **[${TimeFormat.fromS(parseInt(idotartam), 'mm:ss')}]**` : ''}` : `${nowPlaying.title} **${nowPlaying.duration}**`)
+        .setFooter(queue.length >= 1 ? outputMessageRandomiser('sikerVege') : '')
         .setColor('#f15a35')
         .setThumbnail('https://i.imgur.com/8LaIJTB.png')
         .setTimestamp()
@@ -41,10 +38,8 @@ module.exports.run = async (bot, message, args, prefix) => {
 
 module.exports.help = {
     name: 'queue',
-    aliases: ['lejatszasi_lista', 'q'],
+    aliases: ['q'],
     usage: 'queue',
-    description: 'Megmutatja a lejátszási listát.',
+    description: 'Moór megmutatja a lejátszási listát.',
     accessableby: 'Mindenki'
 }
-
-// \n\n__Playlist hossza:__ **${TimeFormat.fromS(parseInt(idotartam), 'mm:ss')}**

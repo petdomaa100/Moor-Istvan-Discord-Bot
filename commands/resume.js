@@ -1,11 +1,11 @@
 const Discord = require('discord.js');
 
-module.exports.run = async (bot, message, prefix) => {    
+module.exports.run = async (bot, message) => {    
     if(message.member.voiceChannel !== message.guild.me.voiceChannel) {
-        let resumeBad1 = new Discord.RichEmbed()
-            .setTitle('Retardált!')
-            .setDescription('Ezt így nem tudom megcsinálni!')
-            .setFooter('Ugyan abban a Voice Channel-ben kell lenned mint Moór.')
+            let resumeBad1 = new Discord.RichEmbed()
+            .setTitle(outputMessageRandomiser('anyazasEleje'))
+            .setDescription(outputMessageRandomiser('UserNotInVC'))
+            .setFooter(outputMessageRandomiser('anyazasVege'))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
         message.channel.send(resumeBad1);
@@ -18,18 +18,18 @@ module.exports.run = async (bot, message, prefix) => {
         nowPlaying.title = nowPlaying.title.substring(0, nowPlaying.title.length - 11);
 
         let resumeGood = new Discord.RichEmbed()
-            .setTitle('Értettem!')
-            .setDescription('Moór elindította a zenét!')
-            .setFooter('Moór remek DJ, de azért még van mit tanulnia.')
+            .setTitle(outputMessageRandomiser('sikerEleje'))
+            .setDescription(outputMessageRandomiser('!resumeSiker'))
+            .setFooter(outputMessageRandomiser('sikerVege'))
             .setColor('0x008000')
             .setThumbnail('https://i.imgur.com/DX0uSM6.png')
         message.channel.send(resumeGood);
         return;
     } else {
         let resumeBad2 = new Discord.RichEmbed()
-            .setTitle('Nyomorék!')
-            .setDescription('Nem is megy semmilyen zene!')
-            .setFooter(`Berakhatsz egy csodás zenét a ${prefix}play <youtube link> commandal!`)
+            .setTitle(outputMessageRandomiser('anyazasEleje'))
+            .setDescription(outputMessageRandomiser('noMusicPlaying'))
+            .setFooter(outputMessageRandomiser('anyazasVege'))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
         message.channel.send(resumeBad2);

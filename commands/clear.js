@@ -3,33 +3,33 @@ const Discord = require('discord.js');
 module.exports.run = async (bot, message, args, prefix) => {
     if(!message.member.hasPermission('MANAGE_MESSAGES')) {
         let clearBad1 = new Discord.RichEmbed()
-            .setTitle('BUZI!')
-            .setDescription('Neked erre nincs engedélyed!')
+            .setTitle(outputMessage(anyazasEleje))
+            .setDescription(outputMessage(noPermission))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
         message.channel.send(clearBad1);
         return;
     }
-
-    if(!args[0] || isNaN(args[0])) {
+    
+    if(args[0] && isNaN(args[0])) {
         let clearBad2 = new Discord.RichEmbed()
-            .setTitle('Nyomorék!')
+            .setTitle(outputMessageRandomiser('anyazasEleje'))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
-            .setDescription('Nem tudok kitörölni semmilyen üzenetet!')
-            .setFooter(`Helyes kód: ${prefix}clear <törlendő üzenetek száma>`)
+            .setDescription(outputMessageRandomiser('!clear_args-isNaN'))
+            .setFooter(`Helyes command: ${prefix}clear <törlendő üzenetek száma>`)
         message.channel.send(clearBad2);
         return;
     }
 
-    const szam = Math.round(parseInt(args[0]));
+    const szam = !args[0] ? 1 : Math.round(parseInt(args[0]));
 
     if(!szam || szam < 1 || szam > 99) {
         let clearBad2 = new Discord.RichEmbed()
-            .setTitle('Autista!')
+            .setTitle(outputMessageRandomiser('anyazasEleje'))
             .setColor('0xFF0000')
             .setThumbnail('https://i.imgur.com/Lgekz3D.png')
-            .setDescription('Nem tudok kitörölni ennyi üzenetet!')
+            .setDescription('Moór nemt tud kitörölni ennyi üzenetet!')
             .setFooter('Minimum: 1db \xa0\xa0\xa0\xa0\xa0\xa0\xa0 Maximum: 99db')
         message.channel.send(clearBad2);
         return;
@@ -43,9 +43,10 @@ module.exports.run = async (bot, message, args, prefix) => {
                 .setTitle('OUFF!')
                 .setColor('0xFF0000')
                 .setThumbnail('https://i.imgur.com/Lgekz3D.png')
-                .setDescription('Nem tudok kitörölni 14 napnál régebbi üzenetet!')
+                .setDescription('Nem tudok kitörölni __14 napnál régebbi__ üzenetet!')
                 .setFooter('Sajnos ez van... khm khm Discord')
-            message.channel.send(clearBad3);
+            message.channel.send(clearBad3).then((msg) => msg.delete(2500));
+            message.delete(2500);
 
             error = true;
         }
@@ -54,10 +55,10 @@ module.exports.run = async (bot, message, args, prefix) => {
     if(error == true) return;
 
     let clearOutput = new Discord.RichEmbed()
-        .setTitle('Siker!')
+        .setTitle(outputMessageRandomiser('sikerEleje'))
         .setColor('#9b9b9b')
         .setThumbnail('https://i.imgur.com/9BJ8AWV.png')
-        .setDescription(`Kitöröltem **${args[0]}db** üzenetet.`)
+        .setDescription(`Kitöröltem **${args[0] || '1'}db** üzenetet.`)
         .setFooter('Ez az üzenet 5 másodpercen bellül megsemmisül.')
     message.channel.send(clearOutput).then((msg) => {
         message.channel.fetchMessages({ limit: 1 }).then(async(messages) => {
@@ -73,7 +74,7 @@ module.exports.run = async (bot, message, args, prefix) => {
 module.exports.help = {
     name: 'clear',
     aliases: ['kuka', 'delete', 'del'],
-    usage: 'clear <amennyi üzenetet kiszeretnél törölni>',
-    description: 'Kitörli a kívánt mennyiségű üzenetet.',
+    usage: 'clear <törlendő üzenetek száma>',
+    description: 'Moór kitörli a megadott mennyiségű üzenetet.',
     accessableby: 'Mindenki'
 }
