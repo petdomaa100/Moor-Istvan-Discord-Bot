@@ -1,27 +1,23 @@
 {
-    "name": "moor_istvan",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Domi",
-    "license": "ISC",
-    "dependencies": {
-        "cheerio": "^1.0.0-rc.2",
-        "discord.js": "^11.4.2",
-        "ffmpeg": "0.0.4",
-        "ffmpeg-binaries": "^3.2.2-3",
-        "hh-mm-ss": "^1.2.0",
-        "moment": "^2.23.0",
-        "nightmare": "^3.0.1",
-        "node-opus": "^0.2.9",
-        "opusscript": "0.0.6",
-        "request": "^2.88.0",
-        "simple-youtube-api": "^5.1.1",
-        "superagent": "^4.0.0",
-        "thousand-separator": "^1.0.4",
-        "ytdl-core": "^0.28.3"
-    }
+	"name": "moor-discord-bot",
+	"version": "6.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "petdomaa100",
+	"license": "ISC",
+	"dependencies": {
+		"discord.js": "^11.5.1",
+		"ffmpeg-binaries": "^4.0.0",
+		"hh-mm-ss": "^1.2.0",
+		"moment": "^2.24.0",
+		"node-opus": "^0.3.2",
+		"opusscript": "0.0.7",
+		"request": "^2.88.0",
+		"simple-youtube-api": "^5.2.1",
+		"youtube-info": "^1.3.2",
+		"ytdl-core": "^0.29.7"
+	}
 }
