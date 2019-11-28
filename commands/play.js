@@ -1,12 +1,11 @@
 const Discord = require('discord.js');
 const YTDL = require('ytdl-core');
 const YouTube = require('simple-youtube-api');
-const botconfig = require('../botconfig.json');
 const TimeFormat = require('hh-mm-ss');
 const fetchVideoInfo = require('youtube-info');
 
 module.exports.run = async (bot, message, args) => {
-    const youtube = new YouTube(botconfig.yt_api_key);
+    const youtube = new YouTube(process.env.TOKEN);
 
     if(!args[0]) {
         var playBad1 = new Discord.RichEmbed()
