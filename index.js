@@ -141,4 +141,4 @@ bot.on("message", async (message) => {
     if(commandfile) commandfile.run(bot, message, args, prefix, prefixJSON, outputMessagesJSON);
 });
 
-bot.login(botconfig.token);
+bot.login(process.env.TOKEN);
