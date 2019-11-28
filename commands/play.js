@@ -5,7 +5,7 @@ const TimeFormat = require('hh-mm-ss');
 const fetchVideoInfo = require('youtube-info');
 
 module.exports.run = async (bot, message, args) => {
-    const youtube = new YouTube(process.env.TOKEN);
+    const youtube = new YouTube(process.env.YT_API_KEY);
 
     if(!args[0]) {
         var playBad1 = new Discord.RichEmbed()
