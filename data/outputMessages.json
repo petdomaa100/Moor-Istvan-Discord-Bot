@@ -27,5 +27,6 @@
     "!qsSiker": ["Moór újrakeverte a lejátszási listát!", "Lejátsási lista has sikeresen been újrakeverd."],
     "!resumeSiker": ["Moór elindította a zenét.", "Moór elindította a zenét, mert igen.", "Moórnak tetszett ez a zene, ezért elindította."],
     "!play-noArgs": ["Most konkrétan nem adtad meg hogy mit játszak le.", "Nem adtad meg Moór-nak hogy mit játszon le, ezért most mérges."],
-    "!play_playlist-waiting": ["Moór már dolgozik is rajta.", "Egy pillanat, Moór máris megoldja."]
+    "!play_playlist-waiting": ["Moór már dolgozik is rajta.", "Egy pillanat, Moór máris megoldja."],
+    "!report-noUser": ["Nem adatad meg higy kit verjek el!", "Nem tudom elverni, ha nem adtad meg a nevét!"]
 }

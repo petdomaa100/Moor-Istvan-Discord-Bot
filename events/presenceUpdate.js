@@ -1,24 +1,52 @@
 const Discord = require('discord.js');
 
-module.exports = (oldMember, newMember) => {
-    if(newMember.user.presence.game && newMember.user.presence.game.name === 'Google Chrome') {
-        //Add start time to the db with user info.
+data = [];
 
-        wotCounterStart = function(user) {
-            const start = new Date().getTime();
-            console.log('start');
+module.exports = async (oldMember, newMember) => {
+    if(newMember.user.presence.game && bannedGames.includes(newMember.user.presence.game.name)) {
+        Obj = {
+            fullUsername: `${newMember.user.username}#${newMember.user.discriminator}`,
+            username: newMember.user.username,
+            discriminator: newMember.user.discriminator,
+            game: newMember.user.presence.game.name,
+            start: new Date().getTime()
         }
-
-        wotCounter(newMember);
+    
+        data.push(Obj);
     }
-    
+
     else if(!newMember.user.presence.game) {
-        //Search for the user in the db, get the start time. Get the time difference (with start - end), add to db the elapsed time.
-        
-        wotCounterEnd = function(user) {
-            const end = new Date().getTime();
+        let username = `${newMember.user.username}#${newMember.user.discriminator}`;
+
+        for (let x = 0; x < data.length; x++) {
+            User = data[x];
+            
+            if(User.fullUsername == username) {
+                Difference = (new Date().getTime() - User.start) / 1000;
+                data.splice(x, 1)
+
+                Data = {
+                    fullUsername: User.fullUsername,
+                    username: User.username,
+                    discriminator: User.discriminator,      
+                    game: User.game,
+                    duration: Math.round(Difference)
+                }
+
+                let channel = newMember.guild.channels.find(channel => channel.name.includes(Data.username));
+
+                if(channel == undefined || channel == null || channel == '') {
+                    let CHANNEL = await newMember.guild.createChannel(`${Data.username}: ${(Data.duration / 60).toFixed(1)} perc`, { type: 'voice' });
     
-            //console.log((start - end) * 1000);    
+                    CHANNEL.setParent('649289949983670273');
+                } else {
+                    let num = channel.name.split(': ')[1];
+                    
+                    num = Number(num.substring(0, num.length - 5));
+
+                    channel.setName(`${Data.username}: ${(Data.duration / 60 + num).toFixed(1)} perc`);
+                }
+            }
         }
     }
 }

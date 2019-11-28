@@ -67,6 +67,7 @@ module.exports.run = async (bot, message, args, prefix) => {
                 CHANNEL.send(rebootOutput);
     
                 loadMessage.delete(4000);
+                message.delete(4000);
             });
         });  
     });
