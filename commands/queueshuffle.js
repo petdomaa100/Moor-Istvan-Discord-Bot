@@ -39,7 +39,7 @@ module.exports.run = async (bot, message) => {
 
 module.exports.help = {
   name: 'shufflequeue',
-  aliases: ['sq'],
+  aliases: ['sq', 'qs', 'shuffle'],
   usage: 'shufflequeue',
   description: 'Moór megkeveri a lejátszási listát.',
   accessableby: 'Mindenki'

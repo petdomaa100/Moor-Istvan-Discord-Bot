@@ -27,7 +27,7 @@ module.exports.run = async (bot, message) => {
 
 module.exports.help = {
     name: 'leave',
-    aliases: ['disconnect', 'stop'],
+    aliases: ['disconnect', 'stop', 'takarodj', 'fuckoff'],
     usage: 'leave',
     description: 'Moór kilép a Voice Channel-ből amiben van.',
     accessableby: 'Mindenki'

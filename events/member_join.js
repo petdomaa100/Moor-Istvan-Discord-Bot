@@ -1,15 +1,15 @@
 const Discord = require('discord.js');
 
 module.exports = (bot, member) => {
-    let CHANNEL = member.guild.channels.find(channel => channel.id == '526037223196590080');
-    let ROLE = member.guild.roles.find(role => role.name == 'Autista kukorica');
+    let CHANNEL = member.guild.channels.find(channel => channel.id == '710478217294905354');
+    let ROLE = member.guild.roles.find(role => role.name == 'Gyermekek');
 
-    if(!CHANNEL.name) return message.channel.send('Nem találtam **bejelentések-🔔** channel-t.');
+    if(!CHANNEL.name) return;
 
     let welcomeMsg = new Discord.RichEmbed()
-        .setTitle('YEEET!')
+        .setTitle('Fasza')
         .setColor('RANDOM')
-        .setDescription(`**${member.user.username}** jött mulatni!`)
+        .setDescription(`**${member.user.username}** megérkezett!`)
         .setTimestamp()
     CHANNEL.send(welcomeMsg);
 

@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 data = [];
 
 module.exports = async (oldMember, newMember) => {
+    /*
     if(newMember.user.presence.game && bannedGames.includes(newMember.user.presence.game.name)) {
         Obj = {
             fullUsername: `${newMember.user.username}#${newMember.user.discriminator}`,
@@ -48,5 +49,5 @@ module.exports = async (oldMember, newMember) => {
                 }
             }
         }
-    }
+    }*/
 }

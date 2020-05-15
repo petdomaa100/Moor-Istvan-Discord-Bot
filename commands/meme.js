@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const request = require('request');
 
 module.exports.run = async (bot, message) => {
+    return message.channel.send('Bocs, ez éppen nem működik...');
     let preMessage = await message.channel.send('Igenis Gordon Kapitány! Már készítem is...');
     
     memeRequest = function() {

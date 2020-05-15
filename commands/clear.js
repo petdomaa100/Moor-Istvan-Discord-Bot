@@ -40,7 +40,7 @@ module.exports.run = async (bot, message, args, prefix) => {
     await message.channel.bulkDelete(szam + 1).catch(e => {
         if(e.message.includes('You can only bulk delete messages that are under 14 days old.')) {
             let clearBad3 = new Discord.RichEmbed()
-                .setTitle('OUFF!')
+                .setTitle('oof')
                 .setColor('0xFF0000')
                 .setThumbnail('https://i.imgur.com/Lgekz3D.png')
                 .setDescription('Nem tudok kitörölni __14 napnál régebbi__ üzenetet!')

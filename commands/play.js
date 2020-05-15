@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const YTDL = require('ytdl-core');
 const YouTube = require('simple-youtube-api');
+const botconfig = require('../botconfig.json');
 const TimeFormat = require('hh-mm-ss');
 const fetchVideoInfo = require('youtube-info');
 

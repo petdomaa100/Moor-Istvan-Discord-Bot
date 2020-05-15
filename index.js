@@ -38,7 +38,7 @@ loadCommands();
 global.nowPlaying = null;
 global.queue = [];
 global.blacklist = [];
-global.bannedGames = ['Minecraft'];
+global.bannedGames = ['Fortnite'];
 
 const undoritoKepek = ['https://i.ytimg.com/vi/YubEjXt1Bf4/maxresdefault.jpg', 'https://i.ytimg.com/vi/p3gZi62iefo/maxresdefault.jpg', 'https://i.pinimg.com/originals/23/6a/42/236a42486c6b097c6fc92e0476984180.jpg', 'https://i.ytimg.com/vi/tOJlVPW3PGw/maxresdefault.jpg', 'https://i.ytimg.com/vi/jxZSILBrowA/maxresdefault.jpg', 'https://i.ytimg.com/vi/IvX2_7IM9gs/maxresdefault.jpg'];
 
@@ -129,7 +129,7 @@ bot.on("message", async (message) => {
     for (let i = 0; i < blacklist.length; i++) {
         if(blacklist[i].user == `${message.author.username}#${message.author.discriminator}` && blacklist[i].lvl >= 2) {
             message.delete();
-            message.reply('Buzi! Neked erre nincs engedélyed!   lol').then((msg) => msg.delete(3000));
+            message.reply('Neked erre nincs engedélyed. gecci').then((msg) => msg.delete(3000));
             return;
         }
     }

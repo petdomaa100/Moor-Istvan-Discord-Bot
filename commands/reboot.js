@@ -18,7 +18,7 @@ module.exports.run = async (bot, message, args, prefix) => {
         message.guild.voiceConnection.disconnect();
     }
 
-    const CHANNEL = message.guild.channels.find(channel => channel.id == '526037223196590080');
+    const CHANNEL = message.guild.channels.find(channel => channel.id == '710478217294905354');
 
     var loadMessage = await message.channel.send('*Commandok előkészítése...*');
 

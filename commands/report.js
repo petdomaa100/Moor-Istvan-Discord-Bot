@@ -18,7 +18,7 @@ module.exports.run = async (bot, message, args) => {
 
     if(reason == '' || reason == undefined) reason = 'Nincs megadva.';
 
-    const CHANNEL = message.guild.channels.find(channel => channel.id == '519174976927170581');
+    const CHANNEL = message.guild.channels.find(channel => channel.id == '710478217294905354');
     if(!CHANNEL) return message.channel.send('Nem találtam meg a **reportok-⛔** channel-t.').then((msg) => msg.delete(2500));
 
     let reportPreOutput = new Discord.RichEmbed()

@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const moment = require('moment');
 
 module.exports.run = async (bot, message) => {
-    let botversion = ('6.0.0')
+    let botversion = ('6.5.0')
     
     let botInfo = new Discord.RichEmbed()
         .setTitle(`**${bot.user.username}-bot információja**`)

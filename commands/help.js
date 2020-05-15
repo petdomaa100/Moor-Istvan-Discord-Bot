@@ -6,16 +6,16 @@ module.exports.run = async (bot, message, args, prefix) => {
     const userRoles = message.member.roles.map(roles => roles.name);
     let serverCommandok = [];
 
-    if(userRoles.includes('Diktátor Titkára (majdnem főadmin)')) {
-        serverCommandok = ['play', 'search', 'pause', 'resume', 'disconnect', 'queue', 'clearqueue', 'removequeue', 'queueshuffle', 'nowplaying', 'suggest', 'botinfo', 'serverinfo', 'userinfo', 'prefix', 'reboot', 'seasonal_skin', 'clear', 'say', 'ping', 'dog', 'meme', 'mazo', 'help', 'report', 'react', 'join', 'leave', 'playmixek1', 'playsum41', 'köszön', 'blacklist', 'blacklistremove', 'blacklistinfo'];
+    if(userRoles.includes('Admin')) {
+        serverCommandok = ['play', 'search', 'pause', 'resume', 'disconnect', 'queue', 'clearqueue', 'removequeue', 'queueshuffle', 'nowplaying', 'suggest', 'botinfo', 'serverinfo', 'userinfo', 'prefix', 'reboot', 'seasonal_skin', 'clear', 'say', 'ping', 'dog', 'meme', 'mazo', 'help', 'report', 'react', 'join', 'leave', 'blacklist', 'blacklistremove', 'blacklistinfo'];
     }
 
-    else if(userRoles.includes('Létező Emberek')) {
-        serverCommandok = ['play', 'search', 'pause', 'resume', 'disconnect', 'queue', 'clearqueue', 'removequeue', 'queueshuffle', 'nowplaying', 'suggest', 'botinfo', 'serverinfo', 'userinfo', 'seasonal_skin', 'say', 'dog', 'meme', 'mazo', 'help', 'report', 'react', 'join', 'leave', 'playmixek1', 'playsum41', 'köszön'];
+    else if(userRoles.includes('Gyermekek')) {
+        serverCommandok = ['play', 'search', 'pause', 'resume', 'disconnect', 'queue', 'clearqueue', 'removequeue', 'queueshuffle', 'nowplaying', 'suggest', 'botinfo', 'serverinfo', 'userinfo', 'seasonal_skin', 'say', 'dog', 'meme', 'mazo', 'help', 'report', 'react', 'join', 'leave',];
     }
     
     else {
-        serverCommandok = ['play', 'search', 'pause', 'resume', 'disconnect', 'queue', 'clearqueue', 'removequeue', 'queueshuffle', 'nowplaying', 'suggest', 'botinfo', 'serverinfo', 'userinfo', 'say', 'dog', 'meme', 'mazo', 'help', 'report', 'react', 'join', 'leave', 'playmixek1', 'playsum41', 'köszön'];
+        serverCommandok = ['play', 'search', 'pause', 'resume', 'disconnect', 'queue', 'clearqueue', 'removequeue', 'queueshuffle', 'nowplaying', 'suggest', 'botinfo', 'serverinfo', 'userinfo', 'say', 'dog', 'meme', 'mazo', 'help', 'report', 'react', 'join', 'leave',];
     }
     
     if(args[0]) {
